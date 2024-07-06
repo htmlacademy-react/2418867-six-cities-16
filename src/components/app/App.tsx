@@ -3,7 +3,7 @@ import { Favorites } from '../../pages/main/favorites';
 import { Login } from '../../pages/main/login';
 import { Main } from '../../pages/main/main';
 import { Offer } from '../../pages/main/offer';
-import { NotFound } from '../../pages/main/404';
+import { NotFound } from '../../pages/404/404';
 import { PrivateRoute } from '../../private-route';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { HelmetProvider } from 'react-helmet-async';
