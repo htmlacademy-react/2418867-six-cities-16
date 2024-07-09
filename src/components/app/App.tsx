@@ -10,19 +10,15 @@ import { OfferType } from '../../types/offer';
 import { FavoriteType } from '../../mocks/favorites';
 
 type AppProps = {
-  numberRentals: number;
   offers: OfferType[];
   favorites: FavoriteType[];
 };
 
-function App({ numberRentals, offers, favorites }: AppProps): JSX.Element {
+function App({ offers, favorites }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={<Main offers={offers} numberRentals={numberRentals} />}
-        />
+        <Route path={AppRoute.Main} element={<Main offers={offers} />} />
         <Route path={AppRoute.Offer} element={<Offer offers={offers} />} />
         <Route
           path={AppRoute.Favorites}
