@@ -6,35 +6,36 @@ import { Offer } from '../../pages/main/offer';
 import { NotFound } from '../../pages/404/404';
 import { PrivateRoute } from '../../private-route';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { HelmetProvider } from 'react-helmet-async';
+import { OfferType } from '../../types/offer';
+import { FavoriteType } from '../../mocks/favorites';
 
 type AppProps = {
   numberRentals: number;
+  offers: OfferType[];
+  favorites: FavoriteType[];
 };
 
-function App({ numberRentals }: AppProps): JSX.Element {
+function App({ numberRentals, offers, favorites }: AppProps): JSX.Element {
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={AppRoute.Main}
-            element={<Main numberRentals={numberRentals}></Main>}
-          />
-          <Route path={AppRoute.Offer} element={<Offer></Offer>} />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <Favorites></Favorites>
-              </PrivateRoute>
-            }
-          />
-          <Route path={AppRoute.Login} element={<Login></Login>} />
-          <Route path="*" element={<NotFound></NotFound>} />
-        </Routes>
-      </BrowserRouter>
-    </HelmetProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={<Main offers={offers} numberRentals={numberRentals} />}
+        />
+        <Route path={AppRoute.Offer} element={<Offer offers={offers} />} />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <Favorites favorites={favorites} />
+            </PrivateRoute>
+          }
+        />
+        <Route path={AppRoute.Login} element={<Login />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -11,4 +11,8 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export { AppRoute, AuthorizationStatus };
+enum Setting {
+  NumberRentals = 312,
+}
+
+export { AppRoute, AuthorizationStatus, Setting };
