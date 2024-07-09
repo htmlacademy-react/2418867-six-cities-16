@@ -4,7 +4,6 @@ import { App } from './components/app/App';
 import { offers } from './mocks/offers';
 import { Setting } from './const';
 import { favorites } from './types/favorites';
-// eslint-disable-next-line react-refresh/only-export-components
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
