@@ -21,7 +21,7 @@ function ListOffers({
 }: OfferTypes): JSX.Element {
   const [, setValue] = useState({});
 
-  const changeText = (e: MouseEvent<HTMLElement, MouseEvent>) => {
+  const changeText = (e: MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
     const newText = e.currentTarget.id;
 
     setValue({ newText });
