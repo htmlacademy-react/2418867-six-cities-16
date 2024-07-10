@@ -1,11 +1,12 @@
+import { ListOffers } from '../../components/list-offers';
 import { Logo } from '../../components/logo';
-import { MainArticle } from '../../components/main-article';
+import { OfferType } from '../../types/offer';
 
 type MainProps = {
-  numberRentals: number;
+  offers: OfferType[];
 };
 
-function Main({ numberRentals }: MainProps): JSX.Element {
+function Main({ offers }: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -80,9 +81,7 @@ function Main({ numberRentals }: MainProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">
-                {numberRentals} places to stay in Amsterdam
-              </b>
+              <b className="places__found">312 places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -110,11 +109,9 @@ function Main({ numberRentals }: MainProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <MainArticle></MainArticle>
-                <MainArticle></MainArticle>
-                <MainArticle></MainArticle>
-                <MainArticle></MainArticle>
-                <MainArticle></MainArticle>
+                {offers.map((offer) => (
+                  <ListOffers key={offer.id} {...offer} className={'cities'} />
+                ))}
               </div>
             </section>
             <div className="cities__right-section">

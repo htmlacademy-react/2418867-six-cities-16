@@ -3,8 +3,8 @@ import './style.css';
 
 function NotFound() {
   return (
-    <>
-      <header>
+    <body className='body'>
+      <header className="header">
         <div className="head-text">
           <p>404 Not Found</p>
         </div>
@@ -33,7 +33,7 @@ function NotFound() {
           </div>
         </div>
       </main>
-    </>
+    </body>
   );
 }
 

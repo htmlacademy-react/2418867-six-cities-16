@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './components/app/App';
-
-// eslint-disable-next-line react-refresh/only-export-components
-const Setting = {
-  NumberRentals: 312,
-} as const;
+import { offers } from './mocks/offers';
+import { favorites } from './types/favorites';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,6 +10,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App numberRentals={Setting.NumberRentals}></App>
+    <App offers={offers} favorites={favorites}></App>
   </React.StrictMode>
 );

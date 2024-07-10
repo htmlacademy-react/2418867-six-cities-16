@@ -11,4 +11,4 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export { AppRoute, AuthorizationStatus };
+export { AppRoute, AuthorizationStatus};
