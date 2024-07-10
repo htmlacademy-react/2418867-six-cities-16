@@ -1,5 +1,5 @@
 type OfferType = {
-    id: number;
+    id: string;
     img: string;
     price: number;
     placeName: string;
