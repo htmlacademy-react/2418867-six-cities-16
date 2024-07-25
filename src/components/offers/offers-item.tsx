@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
+import { IUser } from '../../store/slice';
 import { MouseEvent } from 'react';
-import { IUser } from '../store/slice';
 
-type OfferTypes = {
+interface PostItemProps {
   id: IUser['id'];
   previewImage: IUser['previewImage'];
   price: IUser['price'];
@@ -10,17 +10,16 @@ type OfferTypes = {
   type: IUser['type'];
   className: string;
   onListItemHover: (listItemName: string) => void;
-};
+}
 
-function ListOffers(props: OfferTypes): JSX.Element {
+function OffersItem(post: PostItemProps): JSX.Element {
   const { id, previewImage, price, title, type, className, onListItemHover } =
-    props;
+    post;
 
   const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
     onListItemHover(event.currentTarget.id);
   };
-
   return (
     <article
       onMouseEnter={handleListItemHover}
@@ -69,4 +68,4 @@ function ListOffers(props: OfferTypes): JSX.Element {
   );
 }
 
-export { ListOffers };
+export default OffersItem;

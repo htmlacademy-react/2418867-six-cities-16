@@ -1,6 +1,6 @@
 import { ListFavorites } from '../../components/list-favorites';
 import { Logo } from '../../components/logo';
-import { FavoriteType } from '../../mocks/favorites';
+import { FavoriteType } from '../../types/favorite';
 
 type FavoriteTypes = {
   favorites: FavoriteType[];

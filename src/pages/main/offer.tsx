@@ -1,18 +1,38 @@
 import { Logo } from '../../components/logo';
-import { OfferType } from '../../types/offer';
-import { ListOffers } from '../../components/list-offers';
 import { ReviewsForm } from '../../components/reviews-form';
+import { Map } from '../../components/map';
+import { Point } from '../../types/point';
+import { useEffect, useState } from 'react';
+import { UlOffers } from '../../components/ul-offers';
+import { ReviewsItem } from '../../components/reviews-item';
+import { ReviewsList } from '../../components/reviews-list';
+import { HeaderNavProfile } from '../../components/header-nav-provile';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { fetchUsers } from '../../store/action-creator';
 
-type OfferTypes = {
-  offers: OfferType[];
-};
+function Offer() {
+  const dispatch = useAppDispatch();
 
-function Offer({ offers }: OfferTypes) {
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  const { users } = useAppSelector((state) => state.userSlice);
+
+  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
+    undefined
+  );
+
+  const handleListItemHover = (listItemName: string) => {
+    const currentPoint = users.find((point) => point.id === listItemName);
+
+    setSelectedPoint(currentPoint);
+  };
   return (
     <div className="page">
       <header className="header">
         <div className="container">
-          <ul className="header__nav-list">
+          {/* <ul className="header__nav-list">
             <li className="header__nav-item user">
               <a
                 className="header__nav-link header__nav-link--profile"
@@ -30,7 +50,7 @@ function Offer({ offers }: OfferTypes) {
                 <span className="header__signout">Sign out</span>
               </a>
             </li>
-          </ul>
+          </ul> */}
           <div className="header__wrapper">
             <div className="header__left">
               <Logo></Logo>
@@ -38,16 +58,7 @@ function Offer({ offers }: OfferTypes) {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
+                  <HeaderNavProfile />
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
@@ -188,45 +199,18 @@ function Offer({ offers }: OfferTypes) {
                 <h2 className="reviews__title">
                   Reviews · <span className="reviews__amount">1</span>
                 </h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar"
-                          src="img/avatar-max.jpg"
-                          width={54}
-                          height={54}
-                          alt="Reviews avatar"
-                        />
-                      </div>
-                      <span className="reviews__user-name">Max</span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{ width: '80%' }} />
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river
-                        by the unique lightness of Amsterdam. The building is
-                        green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">
-                        April 2019
-                      </time>
-                    </div>
-                  </li>
-                </ul>
+                <ReviewsList>
+                  <ReviewsItem />
+                </ReviewsList>
                 <form className="reviews__form form" action="#" method="post">
                   <ReviewsForm />
                 </form>
               </section>
             </div>
           </div>
-          <section className="offer__map map" />
+          <section className="offer__map map">
+            <Map selectedPoint={selectedPoint} height="579px" cityValue={[]} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -234,13 +218,11 @@ function Offer({ offers }: OfferTypes) {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              {offers.map((offer) => (
-                <ListOffers
-                  key={offer.id}
-                  {...offer}
-                  className={'near-places'}
-                />
-              ))}
+              <UlOffers
+                offers={users}
+                onListItemHover={handleListItemHover}
+                className={'near-places'}
+              />
             </div>
           </section>
         </div>

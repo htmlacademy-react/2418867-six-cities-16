@@ -1,12 +1,48 @@
-import { ListOffers } from '../../components/list-offers';
+import { useEffect, useState } from 'react';
 import { Logo } from '../../components/logo';
-import { OfferType } from '../../types/offer';
+import { Map } from '../../components/map';
+import { Point } from '../../types/point';
+import { HeaderNavProfile } from '../../components/header-nav-provile';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { fetchUsers } from '../../store/action-creator';
+import OffersContainer from '../../components/offers/offers-container';
+import { ListOfCites } from '../../components/list-of-cities';
 
-type MainProps = {
-  offers: OfferType[];
-};
+function Main(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-function Main({ offers }: MainProps): JSX.Element {
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  const { users } = useAppSelector((state) => state.userSlice);
+
+  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
+    undefined
+  );
+
+  const [cityValue, setCityValue] = useState(users);
+
+  useEffect(() => {
+    const cityFilterDefault = users.filter(
+      (city) => city.city.name === 'Paris'
+    );
+
+    setCityValue(cityFilterDefault);
+  }, [users]);
+
+  const handlecityFilter = (cityName: string) => {
+    const cityFilter = users.filter((city) => city.city.name === cityName);
+
+    setCityValue(cityFilter);
+  };
+
+  const handleListItemHover = (listItemName: string) => {
+    const currentPoint = users.find((point) => point.id === listItemName);
+
+    setSelectedPoint(currentPoint);
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -18,16 +54,7 @@ function Main({ offers }: MainProps): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
+                  <HeaderNavProfile />
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
@@ -44,36 +71,7 @@ function Main({ offers }: MainProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              <ListOfCites handlecityFilter={handlecityFilter} />
             </ul>
           </section>
         </div>
@@ -81,7 +79,7 @@ function Main({ offers }: MainProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{cityValue.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -108,14 +106,20 @@ function Main({ offers }: MainProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {offers.map((offer) => (
-                  <ListOffers key={offer.id} {...offer} className={'cities'} />
-                ))}
-              </div>
+              <OffersContainer
+                onListItemHover={handleListItemHover}
+                className={'cities'}
+                cityValue={cityValue}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <section className="cities__map map">
+                <Map
+                  selectedPoint={selectedPoint}
+                  cityValue={cityValue}
+                  height="817px"
+                />
+              </section>
             </div>
           </div>
         </div>

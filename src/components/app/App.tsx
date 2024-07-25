@@ -6,20 +6,18 @@ import { Offer } from '../../pages/main/offer';
 import { NotFound } from '../../pages/404/404';
 import { PrivateRoute } from '../../private-route';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { OfferType } from '../../types/offer';
-import { FavoriteType } from '../../mocks/favorites';
+import { FavoriteType } from '../../types/favorite';
 
 type AppProps = {
-  offers: OfferType[];
   favorites: FavoriteType[];
 };
 
-function App({ offers, favorites }: AppProps): JSX.Element {
+function App({ favorites }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<Main offers={offers} />} />
-        <Route path={AppRoute.Offer} element={<Offer offers={offers} />} />
+        <Route path={AppRoute.Main} element={<Main />} />
+        <Route path={AppRoute.Offer} element={<Offer />} />
         <Route
           path={AppRoute.Favorites}
           element={
