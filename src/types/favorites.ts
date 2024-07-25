@@ -1,4 +1,4 @@
-import { FavoriteType } from '../types/favorite';
+import { FavoriteType } from '../mocks/favorites';
 
 const favorites: FavoriteType[] = [
   {
@@ -35,5 +35,5 @@ const favorites: FavoriteType[] = [
     ],
   },
 ];
-export { favorites };
 
+export { favorites };

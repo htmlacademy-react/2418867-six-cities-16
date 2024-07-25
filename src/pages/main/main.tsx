@@ -72,7 +72,6 @@ function Main(): JSX.Element {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <ListOfCites handlecityFilter={handlecityFilter} />
-            </ul>
           </section>
         </div>
         <div className="cities">

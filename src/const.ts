@@ -11,12 +11,12 @@ enum MapConst {
   zoom = 10,
 }
 
+
 enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
-
 const URL_MARKER_DEFAULT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 const URL_MARKER_CURRENT =
@@ -29,3 +29,4 @@ export {
   URL_MARKER_CURRENT,
   URL_MARKER_DEFAULT,
 };
+

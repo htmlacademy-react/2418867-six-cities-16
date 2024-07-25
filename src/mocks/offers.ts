@@ -7,6 +7,7 @@ const offers: OfferType[] = [
     price: 80,
     lat: 52.3909553943508,
     lng: 4.85309666406198,
+
     placeName: 'Wood and stone place',
     placeType: 'Room',
   },
@@ -16,6 +17,7 @@ const offers: OfferType[] = [
     price: 132,
     lat: 52.3609553943508,
     lng: 4.85309666406198,
+
     placeName: 'Canal View Prinsengracht',
     placeType: 'Apartment',
   },
@@ -25,6 +27,7 @@ const offers: OfferType[] = [
     price: 180,
     lat: 52.3909553943508,
     lng: 4.929309666406198,
+
     placeName: 'Nice, cozy, warm big bed apartment',
     placeType: 'Apartment',
   },
@@ -34,6 +37,7 @@ const offers: OfferType[] = [
     price: 80,
     lat: 52.3809553943508,
     lng: 4.939309666406198,
+
     placeName: 'Wood and stone place',
     placeType: 'Room',
   },

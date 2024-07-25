@@ -19,11 +19,13 @@ function ListOffers(props: OfferTypes): JSX.Element {
   const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
     onListItemHover(event.currentTarget.id);
+
   };
 
   return (
     <article
       onMouseEnter={handleListItemHover}
+      
       className={`${className}__card place-card`}
       id={id}
     >
@@ -32,6 +34,8 @@ function ListOffers(props: OfferTypes): JSX.Element {
           <img
             className="place-card__image"
             src={previewImage}
+
+       
             width={260}
             height={200}
             alt="Place image"
