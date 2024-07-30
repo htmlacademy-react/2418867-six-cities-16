@@ -40,19 +40,25 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {},
-  extraReducers: {
-    [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
-      state.isLoading = false;
-      state.error = '';
-      state.users = action.payload;
-    },
-    [fetchUsers.pending.type]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchUsers.fulfilled.type,
+      (state, action: PayloadAction<IUser[]>) => {
+        state.isLoading = false;
+        state.error = '';
+        state.users = action.payload;
+      }
+    );
+    builder.addCase(fetchUsers.pending.type, (state) => {
       state.isLoading = true;
-    },
-    [fetchUsers.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+    });
+    builder.addCase(
+      fetchUsers.rejected.type,
+      (state, action: PayloadAction<string>) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      }
+    );
   },
 });
 
