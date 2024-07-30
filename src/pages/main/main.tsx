@@ -32,9 +32,11 @@ function Main(): JSX.Element {
     setCityValue(cityFilterDefault);
   }, [users]);
 
+  const [cityNames, setCityNames] = useState('Paris');
+
   const handlecityFilter = (cityName: string) => {
     const cityFilter = users.filter((city) => city.city.name === cityName);
-
+    setCityNames(cityName);
     setCityValue(cityFilter);
   };
 
@@ -83,9 +85,12 @@ function Main(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {cityValue.length} places to stay in Amsterdam
+                {cityValue.length} places to stay in {cityNames}
               </b>
-              <Popular tab={tab} onClickTab={(id: SetStateAction<number>) => setPlace(id)} />
+              <Popular
+                tab={tab}
+                onClickTab={(id: SetStateAction<number>) => setPlace(id)}
+              />
               <OffersContainer
                 onListItemHover={handleListItemHover}
                 className={'cities'}
