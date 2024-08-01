@@ -16,32 +16,30 @@ function Main(): JSX.Element {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  const { users } = useAppSelector((state) => state.userSlice);
+  const { flat } = useAppSelector((state) => state.flatSlice);
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined
   );
 
-  const [cityValue, setCityValue] = useState(users);
+  const [cityValue, setCityValue] = useState(flat);
 
   useEffect(() => {
-    const cityFilterDefault = users.filter(
-      (city) => city.city.name === 'Paris'
-    );
+    const cityFilterDefault = flat.filter((city) => city.city.name === 'Paris');
 
     setCityValue(cityFilterDefault);
-  }, [users]);
+  }, [flat]);
 
   const [cityNames, setCityNames] = useState('Paris');
 
   const handlecityFilter = (cityName: string) => {
-    const cityFilter = users.filter((city) => city.city.name === cityName);
+    const cityFilter = flat.filter((city) => city.city.name === cityName);
     setCityNames(cityName);
     setCityValue(cityFilter);
   };
 
   const handleListItemHover = (listItemName: string) => {
-    const currentPoint = users.find((point) => point.id === listItemName);
+    const currentPoint = flat.find((point) => point.id === listItemName);
 
     setSelectedPoint(currentPoint);
   };

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IUser } from './slice';
+import { IFlat } from './slice';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // export const fetchUsers = () => async (dispatch: AppDispath) => {
@@ -18,7 +18,7 @@ export const fetchUsers = createAsyncThunk(
   'user/fetchAll',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<IUser[]>(
+      const response = await axios.get<IFlat[]>(
         'https://16.design.htmlacademy.pro/six-cities/offers'
       );
       return response.data;

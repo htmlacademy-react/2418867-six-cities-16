@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
-import { IUser } from '../store/slice';
+import { IFlat } from '../store/slice';
 
 type OfferTypes = {
-  id: IUser['id'];
-  previewImage: IUser['previewImage'];
-  price: IUser['price'];
-  title: IUser['title'];
-  type: IUser['type'];
+  id: IFlat['id'];
+  previewImage: IFlat['previewImage'];
+  price: IFlat['price'];
+  title: IFlat['title'];
+  type: IFlat['type'];
   className: string;
   onListItemHover: (listItemName: string) => void;
 };
