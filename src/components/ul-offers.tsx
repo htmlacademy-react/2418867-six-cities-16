@@ -1,8 +1,8 @@
-import { IUser } from '../store/slice';
+import { IFlat } from '../store/slice';
 import { ListOffers } from './list-offers';
 
 type UlProps = {
-  offers: IUser[];
+  offers: IFlat[];
   className: string;
   onListItemHover: (listItemName: string) => void;
 };

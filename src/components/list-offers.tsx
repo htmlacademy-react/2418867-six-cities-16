@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
-import { IUser } from '../store/slice';
+import { IFlat } from '../store/slice';
 
 type OfferTypes = {
-  id: IUser['id'];
-  previewImage: IUser['previewImage'];
-  price: IUser['price'];
-  title: IUser['title'];
-  type: IUser['type'];
+  id: IFlat['id'];
+  previewImage: IFlat['previewImage'];
+  price: IFlat['price'];
+  title: IFlat['title'];
+  type: IFlat['type'];
   className: string;
   onListItemHover: (listItemName: string) => void;
 };
@@ -56,7 +56,7 @@ function ListOffers(props: OfferTypes): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }} />
+            <span style={{width: `${100 * 1 / 5}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

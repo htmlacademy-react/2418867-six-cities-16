@@ -1,10 +1,10 @@
 import OffersItem from './offers-item';
-import { IUser } from '../../store/slice';
+import { IFlat } from '../../store/slice';
 
 type UIProps = {
   className: string;
   onListItemHover: (listItemName: string) => void;
-  cityValue: IUser[];
+  cityValue: IFlat[];
 };
 
 const OffersContainer = ({
@@ -14,10 +14,10 @@ const OffersContainer = ({
 }: UIProps): JSX.Element => (
   <div className="cities__places-list places__list tabs__content">
     {cityValue &&
-      cityValue.map((user) => (
+      cityValue.map((flat) => (
         <OffersItem
-          key={user.id}
-          {...user}
+          key={flat.id}
+          {...flat}
           onListItemHover={onListItemHover}
           className={className}
         />

@@ -1,37 +1,24 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import { MapConst } from '../const';
+// import { MapConst } from '../const';
 import { Map, TileLayer } from 'leaflet';
 import leaflet from 'leaflet';
-// import { IUser } from '../store/slice';
+import { useAppSelector } from '../store/hook';
 
-function useMap(
-  mapRef: MutableRefObject<HTMLElement | null>,
-  // cityValue: IUser[]
-): Map | null {
+function useMap(mapRef: MutableRefObject<HTMLElement | null>): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
+  const { IFlat } = useAppSelector((state) => state.sliceCity);
+  // console.log(IFlat);
 
   useEffect(() => {
-    // const mapLat = cityValue.map((loc) => {
-    //   loc.mapLocation.forEach((mapLoc) => mapLoc.location.latitude);
-    // });
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = leaflet.map(mapRef.current, {
         center: {
-          lat: MapConst.lat,
-          lng: MapConst.lng,
+          lat: IFlat[0].city.location.latitude,
+          lng: IFlat[0].city.location.longitude,
         },
-        zoom: MapConst.zoom,
+        zoom: IFlat[0].city.location.zoom,
       });
-
-      // if (mapRef.current !== null && !isRenderedRef.current) {
-      //   const instance = leaflet.map(mapRef.current, {
-      //     center: {
-      //       lat: cityValue.map((loc) => loc.mapLocation.forEach((mapLoc) => mapLoc.location.latitude)),
-      //       lng: cityValue.map((loc) => loc.mapLocation.forEach((mapLoc) => mapLoc.location.longitude)),
-      //     },
-      //     zoom: cityValue.map((loc) => loc.mapLocation.forEach((mapLoc) => mapLoc.location.zoom)),
-      //   });
 
       const layer = new TileLayer(
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -45,7 +32,7 @@ function useMap(
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef]);
+  }, [IFlat, mapRef]);
 
   return map;
 }

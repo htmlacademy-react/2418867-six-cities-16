@@ -1,20 +1,29 @@
 import { Link } from 'react-router-dom';
-import { IUser } from '../../store/slice';
+import { IFlat } from '../../store/slice';
 import { MouseEvent } from 'react';
 
 interface PostItemProps {
-  id: IUser['id'];
-  previewImage: IUser['previewImage'];
-  price: IUser['price'];
-  title: IUser['title'];
-  type: IUser['type'];
+  id: IFlat['id'];
+  previewImage: IFlat['previewImage'];
+  price: IFlat['price'];
+  title: IFlat['title'];
+  type: IFlat['type'];
+  rating: IFlat['rating'];
   className: string;
   onListItemHover: (listItemName: string) => void;
 }
 
 function OffersItem(post: PostItemProps): JSX.Element {
-  const { id, previewImage, price, title, type, className, onListItemHover } =
-    post;
+  const {
+    id,
+    previewImage,
+    price,
+    title,
+    type,
+    rating,
+    className,
+    onListItemHover,
+  } = post;
 
   const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
@@ -55,7 +64,7 @@ function OffersItem(post: PostItemProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }} />
+            <span style={{ width: `${(100 * rating) / 5}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

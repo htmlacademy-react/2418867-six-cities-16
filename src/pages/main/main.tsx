@@ -1,47 +1,51 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { Logo } from '../../components/logo';
 import { Map } from '../../components/map';
 import { Point } from '../../types/point';
 import { HeaderNavProfile } from '../../components/header-nav-provile';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
-import { fetchUsers } from '../../store/action-creator';
+import { fetchFlat } from '../../store/action-creator';
 import OffersContainer from '../../components/offers/offers-container';
 import { ListOfCites } from '../../components/list-of-cities';
+import { Popular } from '../../components/popular';
+import { cityClick } from '../../store/sliceCity';
 
 function Main(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchFlat());
   }, [dispatch]);
 
-  const { users } = useAppSelector((state) => state.userSlice);
+  const { flat } = useAppSelector((state) => state.flatSlice);
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined
   );
 
-  const [cityValue, setCityValue] = useState(users);
+  const [cityValue, setCityValue] = useState(flat);
 
   useEffect(() => {
-    const cityFilterDefault = users.filter(
-      (city) => city.city.name === 'Paris'
-    );
-
+    const cityFilterDefault = flat.filter((city) => city.city.name === 'Paris');
     setCityValue(cityFilterDefault);
-  }, [users]);
+  }, [flat]);
+
+  const [cityNames, setCityNames] = useState('Paris');
 
   const handlecityFilter = (cityName: string) => {
-    const cityFilter = users.filter((city) => city.city.name === cityName);
-
+    const cityFilter = flat.filter((city) => city.city.name === cityName);
+    setCityNames(cityName);
     setCityValue(cityFilter);
+    dispatch(cityClick(cityValue));
   };
 
   const handleListItemHover = (listItemName: string) => {
-    const currentPoint = users.find((point) => point.id === listItemName);
+    const currentPoint = flat.find((point) => point.id === listItemName);
 
     setSelectedPoint(currentPoint);
   };
+
+  const [tab, setPlace] = useState(-1);
 
   return (
     <div className="page page--gray page--main">
@@ -79,33 +83,13 @@ function Main(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cityValue.length} places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width={7} height={4}>
-                    <use xlinkHref="#icon-arrow-select" />
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li
-                    className="places__option places__option--active"
-                    tabIndex={0}
-                  >
-                    Popular
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: low to high
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: high to low
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Top rated first
-                  </li>
-                </ul>
-              </form>
+              <b className="places__found">
+                {cityValue.length} places to stay in {cityNames}
+              </b>
+              <Popular
+                tab={tab}
+                onClickTab={(id: SetStateAction<number>) => setPlace(id)}
+              />
               <OffersContainer
                 onListItemHover={handleListItemHover}
                 className={'cities'}
