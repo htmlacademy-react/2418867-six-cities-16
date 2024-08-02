@@ -8,23 +8,23 @@ import { ReviewsItem } from '../../components/reviews-item';
 import { ReviewsList } from '../../components/reviews-list';
 import { HeaderNavProfile } from '../../components/header-nav-provile';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
-import { fetchUsers } from '../../store/action-creator';
+import { fetchFlat } from '../../store/action-creator';
 
 function Offer() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchFlat());
   }, [dispatch]);
 
-  const { users } = useAppSelector((state) => state.userSlice);
+  const { flat } = useAppSelector((state) => state.flatSlice);
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined
   );
 
   const handleListItemHover = (listItemName: string) => {
-    const currentPoint = users.find((point) => point.id === listItemName);
+    const currentPoint = flat.find((point) => point.id === listItemName);
 
     setSelectedPoint(currentPoint);
   };
@@ -219,7 +219,7 @@ function Offer() {
             </h2>
             <div className="near-places__list places__list">
               <UlOffers
-                offers={users}
+                offers={flat}
                 onListItemHover={handleListItemHover}
                 className={'near-places'}
               />

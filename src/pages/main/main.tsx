@@ -4,16 +4,17 @@ import { Map } from '../../components/map';
 import { Point } from '../../types/point';
 import { HeaderNavProfile } from '../../components/header-nav-provile';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
-import { fetchUsers } from '../../store/action-creator';
+import { fetchFlat } from '../../store/action-creator';
 import OffersContainer from '../../components/offers/offers-container';
 import { ListOfCites } from '../../components/list-of-cities';
 import { Popular } from '../../components/popular';
+import { cityClick } from '../../store/sliceCity';
 
 function Main(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchFlat());
   }, [dispatch]);
 
   const { flat } = useAppSelector((state) => state.flatSlice);
@@ -26,7 +27,6 @@ function Main(): JSX.Element {
 
   useEffect(() => {
     const cityFilterDefault = flat.filter((city) => city.city.name === 'Paris');
-
     setCityValue(cityFilterDefault);
   }, [flat]);
 
@@ -36,6 +36,7 @@ function Main(): JSX.Element {
     const cityFilter = flat.filter((city) => city.city.name === cityName);
     setCityNames(cityName);
     setCityValue(cityFilter);
+    dispatch(cityClick(cityValue));
   };
 
   const handleListItemHover = (listItemName: string) => {

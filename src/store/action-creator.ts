@@ -14,8 +14,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 //   }
 // };
 
-export const fetchUsers = createAsyncThunk(
-  'user/fetchAll',
+export const fetchFlat = createAsyncThunk(
+  'fetchAll',
   async (_, thunkAPI) => {
     try {
       const response = await axios.get<IFlat[]>(
